@@ -335,7 +335,6 @@ protected:
                                       Arm64Gen::ARM64Reg reg_b, BitSet32 gpr_caller_save,
                                       BitSet32 fpr_caller_save);
 
-  void EmitUpdateMembase();
   void EmitStoreMembase(const Arm64Gen::ARM64Reg& msr);
 
   // Exits

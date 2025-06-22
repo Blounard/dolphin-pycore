@@ -71,12 +71,12 @@
 
 - (void)loadState:(id)sender
 {
-  State::Load(Core::System::GetInstance(), [sender tag]);
+  State::Load(Core::System::GetInstance(), [sender tag], true);
 }
 
 - (void)saveState:(id)sender
 {
-  State::Save(Core::System::GetInstance(), [sender tag]);
+  State::Save(Core::System::GetInstance(), [sender tag], false, true);
 }
 @end
 
