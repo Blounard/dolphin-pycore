@@ -1524,7 +1524,7 @@ void MainWindow::SetStateSlot(int slot)
 
   Core::DisplayMessage(fmt::format("Selected slot {} - {}", m_state_slot,
                                    State::GetInfoStringOfSlot(m_state_slot, false)),
-                       2500);
+                       2500, true);
 }
 
 void MainWindow::IncrementSelectedStateSlot()

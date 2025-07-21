@@ -156,7 +156,15 @@ void SaveScreenShot();
 void SaveScreenShot(std::string_view name);
 
 // This displays messages in a user-visible way.
-void DisplayMessage(std::string message, int time_in_ms);
+namespace Color
+{
+constexpr u32 CYAN = 0xFF00FFFF;
+constexpr u32 GREEN = 0xFF00FF00;
+constexpr u32 RED = 0xFFFF0000;
+constexpr u32 YELLOW = 0xFFFFFF30;
+}  // namespace Color
+void DisplayMessage(std::string message, int time_in_ms,
+                    bool present = false, u32 argb = Color::YELLOW);
 
 void FrameUpdateOnCPUThread();
 void OnFrameEnd(Core::System& system);
