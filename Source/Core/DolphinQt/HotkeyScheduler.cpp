@@ -512,7 +512,11 @@ void HotkeyScheduler::Run()
         {
           OSD::AddMessage(emulation_speed <= 0 ? "Speed Limit: Unlimited" :
                                                  fmt::format("Speed Limit: {}%",
-                                                             std::lround(emulation_speed * 100.f)));
+                                                             std::lround(emulation_speed * 100.f)),
+            2000, // Duration
+            0xFFFFFF30, //Color YELLOW
+            nullptr, // icon
+            true); // present
         }
       };
 

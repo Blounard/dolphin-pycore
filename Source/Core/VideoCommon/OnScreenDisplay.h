@@ -42,7 +42,7 @@ constexpr u32 VERY_LONG = 10000;
 // On-screen message display (colored yellow by default)
 void AddMessage(std::string message, u32 ms = Duration::SHORT, u32 argb = Color::YELLOW,
                 const VideoCommon::CustomTextureData::ArraySlice::Level* icon = nullptr,
-                bool present = true);
+                bool present = false);
 void AddTypedMessage(MessageType type, std::string message, u32 ms = Duration::SHORT,
                      u32 argb = Color::YELLOW,
                      const VideoCommon::CustomTextureData::ArraySlice::Level* icon = nullptr);

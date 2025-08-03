@@ -257,6 +257,8 @@ void LoadFromBuffer(Core::System& system, Common::UniqueBuffer<u8>& buffer, bool
         DoState(system, p);
         if (emit_event)
           API::GetEventHub().EmitEvent(API::Events::SaveStateLoad{false, -1});
+        if (Config::Get(Config::MAIN_REMOVE_UI_DELAY))
+          g_presenter->Present();
       },
       true);
 }
@@ -302,6 +304,8 @@ void SaveToBuffer(Core::System& system, Common::UniqueBuffer<u8>& buffer, bool e
         ptr = buffer.data();
         PointerWrap p(&ptr, buffer.size(), PointerWrap::Mode::Write);
         DoState(system, p);
+        if (Config::Get(Config::MAIN_REMOVE_UI_DELAY))
+          g_presenter->Present();
       },
       true);
 }
@@ -581,6 +585,8 @@ void SaveAs(Core::System& system, const std::string& filename, bool wait, bool i
           }
           Core::DisplayMessage("Unable to save: Internal DoState Error", 4000);
         }
+        if (Config::Get(Config::MAIN_REMOVE_UI_DELAY))
+          g_presenter->Present();
       },
       true);
 }
@@ -1000,6 +1006,8 @@ void LoadAs(Core::System& system, const std::string& filename, bool is_slot, int
         }
         if (s_on_after_load_callback)
           s_on_after_load_callback();
+        if (Config::Get(Config::MAIN_REMOVE_UI_DELAY))
+          g_presenter->Present();
       },
       true);
 }

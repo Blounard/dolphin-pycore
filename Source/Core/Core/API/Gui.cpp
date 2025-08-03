@@ -20,7 +20,7 @@ constexpr u32 ARGBToABGR(u32 color_abgr)
 
 void Gui::AddOSDMessage(std::string message, u32 duration_ms, u32 color)
 {
-  OSD::AddMessage(message, duration_ms, color);
+  OSD::AddMessage(message, duration_ms, color, nullptr, true);
 }
 
 void Gui::ClearOSDMessages()

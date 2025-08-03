@@ -179,7 +179,8 @@ std::string StopMessage(bool main_thread, std::string_view message)
                      Common::CurrentThreadId(), message);
 }
 
-void DisplayMessage(std::string message, int time_in_ms)
+void DisplayMessage(std::string message, int time_in_ms,
+                    bool present, u32 argb)
 {
   if (!IsRunningOrStarting(Core::System::GetInstance()))
     return;
@@ -188,7 +189,7 @@ void DisplayMessage(std::string message, int time_in_ms)
   if (!std::ranges::all_of(message, Common::IsPrintableCharacter))
     return;
 
-  OSD::AddMessage(std::move(message), time_in_ms);
+  OSD::AddMessage(std::move(message), time_in_ms, argb, nullptr, present);
 }
 
 bool IsRunning(Core::System& system)
