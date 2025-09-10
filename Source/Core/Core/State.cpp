@@ -204,34 +204,6 @@ static void DoState(Core::System& system, PointerWrap& p)
   AchievementManager::GetInstance().DoState(p);
 #endif  // USE_RETRO_ACHIEVEMENTS
 }
-// Legacy version for python stubs
-void LoadFromBufferLegacy(Core::System& system, std::vector<u8>& buffer, bool emit_event)
-{
-    if (NetPlay::IsNetPlayRunning())
-    {
-        OSD::AddMessage("Loading savestates is disabled in Netplay to prevent desyncs");
-        return;
-    }
-
-    if (AchievementManager::GetInstance().IsHardcoreModeActive())
-    {
-        OSD::AddMessage("Loading savestates is disabled in RetroAchievements hardcore mode");
-        return;
-    }
-
-    Core::RunOnCPUThread(
-        system,
-        [&] {
-            if (emit_event)
-                API::GetEventHub().EmitEvent(API::Events::BeforeSaveStateLoad{ false, -1 });
-            u8* ptr = buffer.data();
-            PointerWrap p(&ptr, buffer.size(), PointerWrap::Mode::Read);
-            DoState(system, p);
-            if (emit_event)
-                API::GetEventHub().EmitEvent(API::Events::SaveStateLoad{ false, -1 });
-        },
-        true);
-}
 
 void LoadFromBuffer(Core::System& system, Common::UniqueBuffer<u8>& buffer, bool emit_event)
 {
@@ -262,29 +234,6 @@ void LoadFromBuffer(Core::System& system, Common::UniqueBuffer<u8>& buffer, bool
       },
       true);
 }
-
-// Legacy version for python stubs
-void SaveToBufferLegacy(Core::System& system, std::vector<u8>& buffer, bool emit_event)
-{
-    Core::RunOnCPUThread(
-        system,
-        [&] {
-            if (emit_event)
-                API::GetEventHub().EmitEvent(API::Events::SaveStateSave{ false, -1 });
-            u8* ptr = nullptr;
-            PointerWrap p_measure(&ptr, 0, PointerWrap::Mode::Measure);
-
-            DoState(system, p_measure);
-            const size_t buffer_size = reinterpret_cast<size_t>(ptr);
-            buffer.resize(buffer_size);
-
-            ptr = buffer.data();
-            PointerWrap p(&ptr, buffer_size, PointerWrap::Mode::Write);
-            DoState(system, p);
-        },
-        true);
-}
-
 
 void SaveToBuffer(Core::System& system, Common::UniqueBuffer<u8>& buffer, bool emit_event)
 {
